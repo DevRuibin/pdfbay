@@ -1,12 +1,12 @@
 # PDFBay Robots.txt
-# https://pdfbay.pages.dev
+# https://pdfbay.ruibin-zhang021-fcb.workers.dev
 
 # Allow all crawlers
 User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://pdfbay.pages.dev/sitemap.xml
+Sitemap: https://pdfbay.ruibin-zhang021-fcb.workers.dev/sitemap.xml
 
 # Disallow internal/system paths
 Disallow: /api/

@@ -9,6 +9,9 @@ import { WorkerBrowserConverter } from '@matbee/libreoffice-converter/browser';
 import type { InputFormat } from '@matbee/libreoffice-converter/browser';
 
 const LIBREOFFICE_LOCAL_PATH = import.meta.env.BASE_URL + 'libreoffice-wasm/';
+// Optional CDN override (e.g. GitHub Releases) for hosts whose static assets
+// limit is smaller than the LibreOffice engine (soffice.wasm.gz / .data.gz).
+const LIBREOFFICE_CDN_PATH = import.meta.env.VITE_LIBREOFFICE_URL || '';
 
 export interface LoadProgress {
   phase: 'loading' | 'initializing' | 'converting' | 'complete' | 'ready';
@@ -52,7 +55,7 @@ export class LibreOfficeConverter {
   private basePath: string;
 
   constructor(basePath?: string) {
-    this.basePath = basePath || LIBREOFFICE_LOCAL_PATH;
+    this.basePath = basePath || LIBREOFFICE_CDN_PATH || LIBREOFFICE_LOCAL_PATH;
   }
 
   async initialize(onProgress?: ProgressCallback): Promise<void> {
