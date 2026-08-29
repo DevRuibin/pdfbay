@@ -44,14 +44,26 @@ Optional build-time environment variables (see `.env.example`):
 
 ## ☁️ Deploy to Cloudflare (free)
 
-The build output in `dist/` is a fully static site — it deploys to Cloudflare
-Pages or a Cloudflare Worker (static assets) with no server required.
+The build output in `dist/` is a fully static site. This repo deploys as a
+**Cloudflare Worker with static assets** (free tier). A small Worker script
+(`worker/index.js`) serves the assets and proxies the LibreOffice WASM engine
+(Office → PDF tools) from a GitHub Release, because Workers caps individual
+assets at 25 MiB and the engine exceeds that.
 
 ```bash
 npm install
-SITE_URL=https://your-domain npm run build
-npx wrangler pages deploy dist --project-name pdfbay
-# or: npx wrangler deploy   (with assets = { directory = "dist" } in wrangler.toml)
+SITE_URL=https://your-workers-dev-url VITE_LIBREOFFICE_URL=/lo/ npm run build
+rm -rf dist/libreoffice-wasm   # served via the /lo/ proxy route instead
+npx wrangler login
+npx wrangler deploy
+```
+
+Before deploying, publish the LibreOffice engine once so the `/lo/` route can
+proxy it (or point `LO_SOURCE_BASE` in `worker/index.js` at your own host):
+
+```bash
+gh release create wasm-v1 public/libreoffice-wasm/soffice.{data.gz,wasm.gz,js,worker.js} \
+  public/libreoffice-wasm/browser.worker.global.js
 ```
 
 Advanced features (OCR, PDF editing engine, Ghostscript) load WASM modules
