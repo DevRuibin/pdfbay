@@ -9,7 +9,10 @@
     "openMainMenu": "Ana menüyü aç",
     "language": "Dil",
     "searchLanguage": "Dil ara…",
-    "noLanguagesFound": "Dil bulunamadı"
+    "noLanguagesFound": "Dil bulunamadı",
+    "tools": "Tüm Araçlar",
+    "faq": "Sıkça Sorulan Sorular",
+    "github": "GitHub"
   },
   "donation": {
     "message": "PDFBay'i seviyor musunuz? Ücretsiz ve açık kaynaklı kalmasına yardımcı olun!",
@@ -216,7 +219,7 @@
     },
     "analytics": {
       "question": "Beni takip etmek için çerez veya analiz kullanıyor musunuz?",
-      "answer": "Hayır. PDFBay sizi hiçbir şekilde takip etmez. Çerez, analiz aracı veya izleme betiği kullanmıyoruz; canlı web sitesi pdfbay.ruibin-zhang021-fcb.workers.dev'da bile. Kim olduğunuzu veya araçlarla ne yaptığınızı asla bilmeyiz."
+      "answer": "Hayır. PDFBay sizi hiçbir şekilde takip etmez. Çerez, analiz aracı veya izleme betiği kullanmıyoruz; canlı web sitesi pdfbay.projectbay.uk'da bile. Kim olduğunuzu veya araçlarla ne yaptığınızı asla bilmeyiz."
     }
   },
   "testimonials": {

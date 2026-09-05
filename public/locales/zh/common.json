@@ -9,7 +9,10 @@
     "openMainMenu": "打开主菜单",
     "language": "语言",
     "searchLanguage": "搜索语言…",
-    "noLanguagesFound": "未找到语言"
+    "noLanguagesFound": "未找到语言",
+    "tools": "所有工具",
+    "faq": "常见问题",
+    "github": "GitHub"
   },
   "donation": {
     "message": "喜欢 PDFBay？帮助我们保持免费和开源！",
@@ -216,7 +219,7 @@
     },
     "analytics": {
       "question": "你们使用 Cookie 或分析来跟踪我吗？",
-      "answer": "不会。PDFBay 完全不会追踪您。我们不使用 Cookie、分析工具或任何追踪脚本，即使在正式网站 pdfbay.ruibin-zhang021-fcb.workers.dev 上也是如此。我们永远不知道您是谁，也不知道您用这些工具做了什么。"
+      "answer": "不会。PDFBay 完全不会追踪您。我们不使用 Cookie、分析工具或任何追踪脚本，即使在正式网站 pdfbay.projectbay.uk 上也是如此。我们永远不知道您是谁，也不知道您用这些工具做了什么。"
     }
   },
   "testimonials": {
@@ -326,7 +329,7 @@
   },
   "licensing": {
     "title": "许可适用",
-    "subtitle": "选择适合您需求的许可。"
+    "subtitle": "100% 免费开源，采用 AGPL-3.0 许可证。"
   },
   "multiTool": {
     "uploadPdfs": "上传 PDF",

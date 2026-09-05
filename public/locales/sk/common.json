@@ -9,7 +9,10 @@
     "openMainMenu": "Otvoriť hlavné menu",
     "language": "Jazyk",
     "searchLanguage": "Hľadať jazyk…",
-    "noLanguagesFound": "Nenašli sa žiadne jazyky"
+    "noLanguagesFound": "Nenašli sa žiadne jazyky",
+    "tools": "Všetky nástroje",
+    "faq": "Často kladené otázky",
+    "github": "GitHub"
   },
   "donation": {
     "message": "Páči sa vám PDFBay? Pomôžte nám udržať ho bezplatný a open source!",
@@ -216,7 +219,7 @@
     },
     "analytics": {
       "question": "Používate súbory cookie alebo analytiku na moje sledovanie?",
-      "answer": "Nie. PDFBay vás vôbec nesleduje. Nepoužívame cookies, analytiku ani sledovacie skripty – ani na živej webovej stránke pdfbay.ruibin-zhang021-fcb.workers.dev. Nikdy nevieme, kto ste ani čo s nástrojmi robíte."
+      "answer": "Nie. PDFBay vás vôbec nesleduje. Nepoužívame cookies, analytiku ani sledovacie skripty – ani na živej webovej stránke pdfbay.projectbay.uk. Nikdy nevieme, kto ste ani čo s nástrojmi robíte."
     }
   },
   "testimonials": {

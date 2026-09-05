@@ -9,7 +9,10 @@
     "openMainMenu": "Hauptmenü öffnen",
     "language": "Sprache",
     "searchLanguage": "Sprache suchen…",
-    "noLanguagesFound": "Keine Sprachen gefunden"
+    "noLanguagesFound": "Keine Sprachen gefunden",
+    "tools": "Alle Werkzeuge",
+    "faq": "Häufig gestellte Fragen",
+    "github": "GitHub"
   },
   "donation": {
     "message": "Liebst du PDFBay? Hilf uns, es kostenlos und Open Source zu halten!",
@@ -216,7 +219,7 @@
     },
     "analytics": {
       "question": "Verwendet ihr Cookies oder Analysen, um mich zu verfolgen?",
-      "answer": "Nein. PDFBay verfolgt Sie in keiner Weise. Wir verwenden keine Cookies, keine Analysetools und keine Tracking-Skripte – auch nicht auf der Live-Website pdfbay.ruibin-zhang021-fcb.workers.dev. Wir wissen nie, wer Sie sind oder was Sie mit den Tools tun."
+      "answer": "Nein. PDFBay verfolgt Sie in keiner Weise. Wir verwenden keine Cookies, keine Analysetools und keine Tracking-Skripte – auch nicht auf der Live-Website pdfbay.projectbay.uk. Wir wissen nie, wer Sie sind oder was Sie mit den Tools tun."
     }
   },
   "testimonials": {

@@ -50,6 +50,8 @@
           </svg>
           <span data-i18n="nav.github">GitHub</span>
         </a>
+        <!-- Language switcher (desktop) — filled by language-switcher-static.ts -->
+        <div id="nav-lang-switcher"></div>
       </div>
 
       <!-- Mobile Hamburger Button -->
@@ -125,7 +127,12 @@
         data-i18n="nav.github"
         >GitHub</a
       >
+      <!-- Language switcher (mobile) — filled by language-switcher-static.ts -->
+      <div id="mobile-lang-switcher"></div>
     </div>
   </div>
 </nav>
+
+<script type="module" src="/src/js/i18n/language-switcher-static.ts"></script>
+<script type="module" src="/src/js/sw-register.ts"></script>
 {{/if}}

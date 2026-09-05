@@ -50,13 +50,20 @@ The build output in `dist/` is a fully static site. This repo deploys as a
 (Office → PDF tools) from a GitHub Release, because Workers caps individual
 assets at 25 MiB and the engine exceeds that.
 
+The canonical production config is committed in `.env.production`
+(SITE_URL=https://pdfbay.projectbay.uk, VITE_LIBREOFFICE_URL=/lo/, WASM CDN
+defaults), so the one-command build below produces the correct canonicals and
+points the LibreOffice engine at the `/lo/` proxy route.
+
 ```bash
 npm install
-SITE_URL=https://your-workers-dev-url VITE_LIBREOFFICE_URL=/lo/ npm run build
-rm -rf dist/libreoffice-wasm   # served via the /lo/ proxy route instead
+npm run build:cf   # builds, then removes dist/libreoffice-wasm (served via /lo/)
 npx wrangler login
 npx wrangler deploy
 ```
+
+`build:cf` strips the local LibreOffice engine because Workers caps individual
+assets at 25 MiB; the `/lo/` route serves it from a GitHub Release instead.
 
 Before deploying, publish the LibreOffice engine once so the `/lo/` route can
 proxy it (or point `LO_SOURCE_BASE` in `worker/index.js` at your own host):

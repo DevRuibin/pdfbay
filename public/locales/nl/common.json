@@ -9,7 +9,10 @@
     "openMainMenu": "Hoofdmenu openen",
     "language": "Taal",
     "searchLanguage": "Taal zoeken…",
-    "noLanguagesFound": "Geen talen gevonden"
+    "noLanguagesFound": "Geen talen gevonden",
+    "tools": "Alle Tools",
+    "faq": "Veelgestelde vragen",
+    "github": "GitHub"
   },
   "donation": {
     "message": "Vind je PDFBay geweldig? Help ons het gratis en open source te houden!",
@@ -216,7 +219,7 @@
     },
     "analytics": {
       "question": "Gebruikt PDFBay cookies of analytics om mij te volgen?",
-      "answer": "Nee. PDFBay volgt je helemaal niet. We gebruiken geen cookies, analytics of trackingscripts – ook niet op de live website pdfbay.ruibin-zhang021-fcb.workers.dev. We weten nooit wie je bent of wat je met de tools doet."
+      "answer": "Nee. PDFBay volgt je helemaal niet. We gebruiken geen cookies, analytics of trackingscripts – ook niet op de live website pdfbay.projectbay.uk. We weten nooit wie je bent of wat je met de tools doet."
     }
   },
   "testimonials": {

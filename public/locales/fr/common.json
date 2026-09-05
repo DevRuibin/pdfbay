@@ -9,7 +9,10 @@
     "openMainMenu": "Ouvrir le menu principal",
     "language": "Langue",
     "searchLanguage": "Rechercher une langue…",
-    "noLanguagesFound": "Aucune langue trouvée"
+    "noLanguagesFound": "Aucune langue trouvée",
+    "tools": "Tous les outils",
+    "faq": "Questions fréquemment posées",
+    "github": "GitHub"
   },
   "donation": {
     "message": "Vous aimez PDFBay ? Aidez-nous à le garder open source !",
@@ -326,7 +329,7 @@
   },
   "licensing": {
     "title": "Licences pour",
-    "subtitle": "Choisissez la licence adaptée à vos besoins."
+    "subtitle": "100 % gratuit et open source sous licence AGPL-3.0."
   },
   "multiTool": {
     "uploadPdfs": "Importer des PDF",

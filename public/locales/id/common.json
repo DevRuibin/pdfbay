@@ -9,7 +9,10 @@
     "openMainMenu": "Buka menu utama",
     "language": "Bahasa",
     "searchLanguage": "Cari bahasa…",
-    "noLanguagesFound": "Bahasa tidak ditemukan"
+    "noLanguagesFound": "Bahasa tidak ditemukan",
+    "tools": "Semua Alat",
+    "faq": "Pertanyaan yang Sering Diajukan",
+    "github": "GitHub"
   },
   "donation": {
     "message": "Suka PDFBay? Bantu kami menjaganya tetap gratis dan sumber terbuka!",
@@ -216,7 +219,7 @@
     },
     "analytics": {
       "question": "Apakah Anda menggunakan cookie atau analitik untuk melacak saya?",
-      "answer": "Tidak. PDFBay sama sekali tidak melacak Anda. Kami tidak menggunakan cookie, analitik, atau skrip pelacakan apa pun, bahkan di situs web langsung pdfbay.ruibin-zhang021-fcb.workers.dev. Kami tidak pernah tahu siapa Anda atau apa yang Anda lakukan dengan alat-alat ini."
+      "answer": "Tidak. PDFBay sama sekali tidak melacak Anda. Kami tidak menggunakan cookie, analitik, atau skrip pelacakan apa pun, bahkan di situs web langsung pdfbay.projectbay.uk. Kami tidak pernah tahu siapa Anda atau apa yang Anda lakukan dengan alat-alat ini."
     }
   },
   "testimonials": {

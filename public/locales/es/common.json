@@ -9,7 +9,10 @@
     "openMainMenu": "Abrir menú principal",
     "language": "Idioma",
     "searchLanguage": "Buscar idioma…",
-    "noLanguagesFound": "No se encontraron idiomas"
+    "noLanguagesFound": "No se encontraron idiomas",
+    "tools": "Todas las Herramientas",
+    "faq": "Preguntas frecuentes",
+    "github": "GitHub"
   },
   "donation": {
     "message": "¿Te encanta PDFBay? ¡Ayúdanos a mantenerlo gratis y de código abierto!",
@@ -216,7 +219,7 @@
     },
     "analytics": {
       "question": "¿Usan cookies o análisis para rastrearme?",
-      "answer": "No. PDFBay no te rastrea en absoluto. No usamos cookies, analíticas ni scripts de seguimiento, ni siquiera en el sitio web en vivo pdfbay.ruibin-zhang021-fcb.workers.dev. Nunca sabemos quién eres ni qué haces con las herramientas."
+      "answer": "No. PDFBay no te rastrea en absoluto. No usamos cookies, analíticas ni scripts de seguimiento, ni siquiera en el sitio web en vivo pdfbay.projectbay.uk. Nunca sabemos quién eres ni qué haces con las herramientas."
     }
   },
   "testimonials": {
@@ -326,7 +329,7 @@
   },
   "licensing": {
     "title": "Licencias para",
-    "subtitle": "Elige la licencia que se ajuste a tus necesidades."
+    "subtitle": "100 % gratis y de código abierto bajo la licencia AGPL-3.0."
   },
   "multiTool": {
     "uploadPdfs": "Cargar PDFs",

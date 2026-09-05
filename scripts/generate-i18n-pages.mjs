@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 const DIST_DIR = path.resolve(__dirname, '../dist');
 const LOCALES_DIR = path.resolve(__dirname, '../public/locales');
-const SITE_URL = (process.env.SITE_URL || 'https://pdfbay.ruibin-zhang021-fcb.workers.dev').replace(
+const SITE_URL = (process.env.SITE_URL || 'https://pdfbay.projectbay.uk').replace(
   /\/+$/,
   ''
 );

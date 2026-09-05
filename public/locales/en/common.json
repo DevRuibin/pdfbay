@@ -221,7 +221,7 @@
     },
     "analytics": {
       "question": "Do you use cookies or analytics to track me?",
-      "answer": "No. PDFBay does not track you at all. We do not use cookies, analytics, or any tracking scripts, not even on the live website at pdfbay.ruibin-zhang021-fcb.workers.dev. We never know who you are or what you do with the tools."
+      "answer": "No. PDFBay does not track you at all. We do not use cookies, analytics, or any tracking scripts, not even on the live website at pdfbay.projectbay.uk. We never know who you are or what you do with the tools."
     }
   },
   "testimonials": {
@@ -335,7 +335,7 @@
   },
   "licensing": {
     "title": "Licensing for",
-    "subtitle": "Choose the license that fits your needs."
+    "subtitle": "100% free and open source under the AGPL-3.0 license."
   },
   "multiTool": {
     "uploadPdfs": "Upload PDFs",

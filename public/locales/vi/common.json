@@ -9,7 +9,10 @@
     "openMainMenu": "Mở menu chính",
     "language": "Ngôn ngữ",
     "searchLanguage": "Tìm ngôn ngữ…",
-    "noLanguagesFound": "Không tìm thấy ngôn ngữ"
+    "noLanguagesFound": "Không tìm thấy ngôn ngữ",
+    "tools": "Tất cả công cụ",
+    "faq": "Câu hỏi thường gặp",
+    "github": "GitHub"
   },
   "donation": {
     "message": "Bạn yêu thích PDFBay? Hãy giúp chúng tôi giữ nó miễn phí và mã nguồn mở!",
@@ -216,7 +219,7 @@
     },
     "analytics": {
       "question": "Bạn có sử dụng cookie hoặc phân tích để theo dõi tôi không?",
-      "answer": "Không. PDFBay hoàn toàn không theo dõi bạn. Chúng tôi không dùng cookie, công cụ phân tích hay bất kỳ tập lệnh theo dõi nào, kể cả trên trang web chính thức pdfbay.ruibin-zhang021-fcb.workers.dev. Chúng tôi không bao giờ biết bạn là ai hay bạn làm gì với các công cụ."
+      "answer": "Không. PDFBay hoàn toàn không theo dõi bạn. Chúng tôi không dùng cookie, công cụ phân tích hay bất kỳ tập lệnh theo dõi nào, kể cả trên trang web chính thức pdfbay.projectbay.uk. Chúng tôi không bao giờ biết bạn là ai hay bạn làm gì với các công cụ."
     }
   },
   "testimonials": {

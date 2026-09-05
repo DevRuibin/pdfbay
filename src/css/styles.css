@@ -795,3 +795,11 @@ input[type='number']::-webkit-outer-spin-button {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Static language switcher (navbar, every page) */
+.lang-switcher-details summary::-webkit-details-marker {
+  display: none;
+}
+.lang-switcher-details summary {
+  list-style: none;
+}
