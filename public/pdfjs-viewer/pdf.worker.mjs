@@ -24,6 +24,7 @@
  * pdfjsVersion = 5.4.296
  * pdfjsBuild = f56dc8601
  */
+import "./safari-compat-polyfills.js";
 /******/ // The require scope
 /******/ var __webpack_require__ = {};
 /******/ 
