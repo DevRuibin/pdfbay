@@ -226,6 +226,13 @@ const baseCategories = [
     name: 'Convert to PDF',
     tools: [
       {
+        href: import.meta.env.BASE_URL + 'image-to-text.html',
+        name: 'Image to Text',
+        icon: 'ph-text-t',
+        subtitle:
+          'Extract text from photos and screenshots (JPG, PNG, WebP, BMP, TIFF, HEIC) with OCR that runs in your browser.',
+      },
+      {
         href: import.meta.env.BASE_URL + 'image-to-pdf.html',
         name: 'Images to PDF',
         icon: 'ph-images',

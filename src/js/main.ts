@@ -12,12 +12,7 @@ import {
   formatShortcutDisplay,
   formatStars,
 } from './utils/helpers.js';
-import {
-  initI18n,
-  applyTranslations,
-  rewriteLinks,
-  t,
-} from './i18n/index.js';
+import { initI18n, applyTranslations, rewriteLinks, t } from './i18n/index.js';
 import {
   loadRuntimeConfig,
   isToolDisabled,
@@ -195,6 +190,7 @@ const init = async () => {
     'Create PDF Form': 'tools:createPdfForm',
     'Remove Blank Pages': 'tools:removeBlankPages',
     'Images to PDF': 'tools:imageToPdf',
+    'Image to Text': 'tools:imageToText',
     'PNG to PDF': 'tools:pngToPdf',
     'WebP to PDF': 'tools:webpToPdf',
     'SVG to PDF': 'tools:svgToPdf',

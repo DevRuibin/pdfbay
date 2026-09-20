@@ -7,10 +7,9 @@ const __dirname = path.dirname(__filename);
 
 const DIST_DIR = path.resolve(__dirname, '../dist');
 const LOCALES_DIR = path.resolve(__dirname, '../public/locales');
-const SITE_URL = (process.env.SITE_URL || 'https://pdfbay.projectbay.uk').replace(
-  /\/+$/,
-  ''
-);
+const SITE_URL = (
+  process.env.SITE_URL || 'https://pdfbay.projectbay.uk'
+).replace(/\/+$/, '');
 const EXCLUDED_PAGES = new Set(['404', 'wasm-settings']);
 
 const languages = fs.readdirSync(LOCALES_DIR).filter((file) => {
@@ -86,32 +85,30 @@ function generateSitemap() {
   };
 
   let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 `;
 
+  // Every language version is submitted as its own URL. The hreflang cluster
+  // lives in each page's <head> (the generator writes the full, symmetric set
+  // there), so repeating 21 alternate links per entry here would only inflate
+  // the file.
+  let count = 0;
   for (const pageName of htmlFiles) {
     const priority = getPriority(pageName);
-    const url = buildUrl('en', pageName);
-    const lastmod = getLastMod('en', pageName);
 
-    sitemap += `  <url>
+    for (const lang of languages) {
+      const url = buildUrl(lang, pageName);
+      const lastmod = getLastMod(lang, pageName);
+
+      sitemap += `  <url>
     <loc>${url}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>${priority}</priority>
-`;
-
-    for (const altLang of languages) {
-      const altUrl = buildUrl(altLang, pageName);
-      sitemap += `    <xhtml:link rel="alternate" hreflang="${altLang}" href="${altUrl}"/>
-`;
-    }
-
-    const defaultUrl = buildUrl('en', pageName);
-    sitemap += `    <xhtml:link rel="alternate" hreflang="x-default" href="${defaultUrl}"/>
   </url>
 `;
+      count++;
+    }
   }
 
   sitemap += `</urlset>
@@ -124,7 +121,7 @@ function generateSitemap() {
   fs.writeFileSync(publicSitemapPath, sitemap);
 
   console.log(
-    `✅ Sitemap generated with ${htmlFiles.length} canonical URLs (${languages.length} hreflang alternates each)`
+    `✅ Sitemap generated with ${count} URLs (${htmlFiles.length} pages × ${languages.length} languages)`
   );
 }
 

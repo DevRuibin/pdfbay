@@ -7,10 +7,9 @@ const __dirname = path.dirname(__filename);
 
 const DIST_DIR = path.resolve(__dirname, '../dist');
 const LOCALES_DIR = path.resolve(__dirname, '../public/locales');
-const SITE_URL = (process.env.SITE_URL || 'https://pdfbay.projectbay.uk').replace(
-  /\/+$/,
-  ''
-);
+const SITE_URL = (
+  process.env.SITE_URL || 'https://pdfbay.projectbay.uk'
+).replace(/\/+$/, '');
 const BASE_PATH = (process.env.BASE_URL || '/').replace(/\/$/, '');
 const HOST = new URL(SITE_URL).hostname;
 
@@ -60,6 +59,60 @@ function findOne(html, regex) {
   return m ? m[1] : null;
 }
 
+const localeCache = new Map();
+function loadLocale(lang, namespace) {
+  const cacheKey = `${lang}/${namespace}`;
+  if (localeCache.has(cacheKey)) return localeCache.get(cacheKey);
+  const file = path.join(LOCALES_DIR, lang, `${namespace}.json`);
+  let parsed;
+  try {
+    parsed = JSON.parse(fs.readFileSync(file, 'utf-8'));
+  } catch {
+    parsed = null;
+  }
+  localeCache.set(cacheKey, parsed ?? null);
+  return parsed ?? null;
+}
+
+// Resolve an i18next key the way the app does: 'common' is the default
+// namespace, 'tools:' selects the tools namespace, English is the fallback.
+const localeDirs = new Set(
+  fs
+    .readdirSync(LOCALES_DIR)
+    .filter((entry) => fs.statSync(path.join(LOCALES_DIR, entry)).isDirectory())
+);
+
+function resolveTranslation(rel, rawKey) {
+  if (!rawKey) return null;
+  const langMatch = rel
+    .split('/')
+    .slice(0, -1)
+    .find((part) => localeDirs.has(part));
+  const lang = langMatch || 'en';
+  let namespace = 'common';
+  let key = rawKey;
+  const colon = rawKey.indexOf(':');
+  if (colon !== -1) {
+    namespace = rawKey.slice(0, colon);
+    key = rawKey.slice(colon + 1);
+  }
+
+  const lookup = (lng) => {
+    const pack = loadLocale(lng, namespace);
+    if (!pack) return undefined;
+    return key
+      .split('.')
+      .reduce(
+        (acc, part) => (acc && typeof acc === 'object' ? acc[part] : undefined),
+        pack
+      );
+  };
+
+  let value = lookup(lang);
+  if (typeof value !== 'string') value = lookup('en');
+  return typeof value === 'string' ? value : null;
+}
+
 function findAll(html, regex) {
   const out = [];
   let m;
@@ -74,6 +127,16 @@ function expectedCanonicalForFile(rel) {
   const slug = baseName === 'index' ? '' : baseName;
   const segments = [SITE_URL];
   if (BASE_PATH) segments.push(BASE_PATH.replace(/^\//, ''));
+  // dist/<lang>/<page>.html is a language version of its own URL; it must
+  // canonicalize to itself, not to the English page.
+  const langDirs = new Set(
+    fs
+      .readdirSync(LOCALES_DIR)
+      .filter((entry) =>
+        fs.statSync(path.join(LOCALES_DIR, entry)).isDirectory()
+      )
+  );
+  segments.push(...parts.filter((part) => langDirs.has(part)));
   if (slug) segments.push(slug);
   return segments.join('/').replace(/\/+$/, '') || SITE_URL;
 }
@@ -149,10 +212,21 @@ function auditHtml(file) {
 
   const emptyI18n = html.match(/<span[^>]*data-i18n="[^"]+"[^>]*>\s*<\/span>/g);
   if (emptyI18n && emptyI18n.length > 0) {
-    fail(
-      'data-i18n',
-      `${file.rel}: ${emptyI18n.length} empty data-i18n spans (e.g. ${emptyI18n[0].slice(0, 80)})`
-    );
+    // A blank span is only wrong when the page's language actually has text for
+    // that key. The hero reorders per language ("The … built for privacy"), so
+    // translators legitimately blank the spans the phrase no longer uses.
+    const genuine = emptyI18n.filter((span) => {
+      const key = (span.match(/data-i18n="([^"]+)"/) || [])[1];
+      const value = resolveTranslation(file.rel, key);
+      if (value === null) return true;
+      return value.trim() !== '';
+    });
+    if (genuine.length > 0) {
+      fail(
+        'data-i18n',
+        `${file.rel}: ${genuine.length} empty data-i18n spans (e.g. ${genuine[0].slice(0, 80)})`
+      );
+    }
   }
 
   const aggregateRating = html.includes('"aggregateRating"');
@@ -230,10 +304,22 @@ function auditSitemap() {
     .filter((d) => fs.statSync(path.join(LOCALES_DIR, d)).isDirectory());
   for (const lang of expectedLocales) {
     if (lang === 'en') continue;
-    const hreflangPattern = new RegExp(`hreflang="${lang}"`);
-    if (!hreflangPattern.test(xml)) {
-      warn('sitemap', `sitemap has no hreflang entry for locale "${lang}"`);
+    // Language versions are submitted as their own URLs; the hreflang cluster
+    // itself is declared in each page's <head>.
+    const localeUrlPattern = new RegExp(`<loc>[^<]*/${lang}/`);
+    if (!localeUrlPattern.test(xml)) {
+      warn('sitemap', `sitemap has no URLs for locale "${lang}"`);
     }
+  }
+
+  const englishPages = locs.filter((loc) => {
+    const path = new URL(loc).pathname;
+    return !expectedLocales.some(
+      (lang) => lang !== 'en' && path.startsWith(`/${lang}/`)
+    );
+  });
+  if (englishPages.length === 0) {
+    warn('sitemap', 'sitemap has no English URLs');
   }
 }
 

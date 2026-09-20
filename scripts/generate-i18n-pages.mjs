@@ -8,10 +8,9 @@ const __dirname = path.dirname(__filename);
 
 const DIST_DIR = path.resolve(__dirname, '../dist');
 const LOCALES_DIR = path.resolve(__dirname, '../public/locales');
-const SITE_URL = (process.env.SITE_URL || 'https://pdfbay.projectbay.uk').replace(
-  /\/+$/,
-  ''
-);
+const SITE_URL = (
+  process.env.SITE_URL || 'https://pdfbay.projectbay.uk'
+).replace(/\/+$/, '');
 const BASE_PATH = (process.env.BASE_URL || '/').replace(/\/$/, '');
 
 const languages = fs.readdirSync(LOCALES_DIR).filter((file) => {
@@ -51,7 +50,79 @@ function loadEnglishTools() {
   return JSON.parse(fs.readFileSync(toolsPath, 'utf-8'));
 }
 
+function loadEnglishCommon() {
+  const commonPath = path.join(LOCALES_DIR, 'en/common.json');
+  if (!fs.existsSync(commonPath)) return {};
+  return JSON.parse(fs.readFileSync(commonPath, 'utf-8'));
+}
+
 const ENGLISH_TOOLS = loadEnglishTools();
+const ENGLISH_COMMON = loadEnglishCommon();
+
+function resolveKey(source, key) {
+  return key
+    .split('.')
+    .reduce(
+      (acc, part) => (acc && typeof acc === 'object' ? acc[part] : undefined),
+      source
+    );
+}
+
+// Mirrors applyTranslations() in src/js/i18n/i18n.ts — same namespaces
+// ('common' is the default, 'tools:' prefix for tool strings), same English
+// fallback — but resolved at build time so the served HTML carries localized
+// copy instead of leaving it to a client-side swap. Crawlers and the first
+// paint then see the page's own language rather than English placeholder text.
+function makeTranslator(lang, translations) {
+  const localized = translations[lang] || {};
+  const english = { common: ENGLISH_COMMON, tools: ENGLISH_TOOLS };
+
+  const lookup = (pack, namespace, key) =>
+    resolveKey(namespace === 'tools' ? pack.tools : pack.common, key);
+
+  return (rawKey) => {
+    if (!rawKey) return null;
+    let namespace = 'common';
+    let key = rawKey;
+    const colon = rawKey.indexOf(':');
+    if (colon !== -1) {
+      namespace = rawKey.slice(0, colon);
+      key = rawKey.slice(colon + 1);
+    }
+
+    let value = lookup(localized, namespace, key);
+    if (typeof value !== 'string' && namespace === 'common') {
+      value = lookup(localized, 'tools', key);
+    }
+    if (typeof value !== 'string') value = lookup(english, namespace, key);
+    if (typeof value !== 'string') value = lookup(english, 'tools', key);
+
+    return typeof value === 'string' ? value : null;
+  };
+}
+
+function hydrateI18nText(document, translate) {
+  document.querySelectorAll('[data-i18n]').forEach((element) => {
+    const value = translate(element.getAttribute('data-i18n'));
+    if (value === null) return;
+    // The runtime overwrites textContent outright; doing that here would delete
+    // child markup, so only leaf nodes are rewritten.
+    if (element.children.length === 0) element.textContent = value;
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
+    const value = translate(element.getAttribute('data-i18n-placeholder'));
+    if (value === null) return;
+    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+      element.setAttribute('placeholder', value);
+    }
+  });
+
+  document.querySelectorAll('[data-i18n-title]').forEach((element) => {
+    const value = translate(element.getAttribute('data-i18n-title'));
+    if (value !== null) element.setAttribute('title', value);
+  });
+}
 
 // TODO@ALAM: Let users build only a single language
 function buildUrl(langPrefix, pagePath) {
@@ -242,14 +313,21 @@ function processFileForLanguage(
   document.head.appendChild(defaultLink);
 
   const localizedUrl = buildUrl(lang, pagePath);
-  const canonicalUrl = buildUrl('', pagePath);
   let canonical = document.querySelector('link[rel="canonical"]');
   if (!canonical) {
     canonical = document.createElement('link');
     canonical.rel = 'canonical';
     document.head.appendChild(canonical);
   }
-  canonical.href = canonicalUrl;
+  // Self-referencing: a localized page that canonicalizes to the English URL
+  // makes Google drop the whole hreflang cluster (the annotations contradict
+  // the canonical), so the translated pages never rank on their own.
+  canonical.href = localizedUrl;
+
+  const ogLocale = document.querySelector('meta[property="og:locale"]');
+  if (ogLocale) ogLocale.content = lang.replace('-', '_');
+
+  hydrateI18nText(document, makeTranslator(lang, translations));
 
   const ogUrl = document.querySelector('meta[property="og:url"]');
   if (ogUrl) ogUrl.content = localizedUrl;

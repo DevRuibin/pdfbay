@@ -750,6 +750,7 @@ export default defineConfig(() => {
           ),
           'bmp-to-pdf': resolve(__dirname, 'src/pages/bmp-to-pdf.html'),
           'heic-to-pdf': resolve(__dirname, 'src/pages/heic-to-pdf.html'),
+          'image-to-text': resolve(__dirname, 'src/pages/image-to-text.html'),
           'tiff-to-pdf': resolve(__dirname, 'src/pages/tiff-to-pdf.html'),
           'txt-to-pdf': resolve(__dirname, 'src/pages/txt-to-pdf.html'),
           'markdown-to-pdf': resolve(
