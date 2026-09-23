@@ -6,6 +6,12 @@
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    // The Worker must run in front of the assets: otherwise the asset layer
+    // answers /page.html with its own temporary 307 and never invokes the
+    // Worker, which also owns the /lo/ engine proxy. Note a *pattern array*
+    // here does not fall through to the Worker for non-matching paths, which
+    // silently breaks /lo/ — keep this a plain `true`.
+    "run_worker_first": true
   }
 }

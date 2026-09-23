@@ -24,6 +24,10 @@ const toCamelCase = (str) => {
 const KEY_MAPPING = {
   index: 'home',
   404: 'notFound',
+  // These two pages carry no data-i18n binding on their <h1>, so the key cannot
+  // be read off the page the way every other tool page can.
+  'pdf-multi-tool': 'pdfMultiTool',
+  'pdf-workflow': 'pdfWorkflow',
 };
 
 function loadAllTranslations() {
@@ -245,14 +249,28 @@ function processFileForLanguage(
   langDir
 ) {
   const filenameNoExt = file.replace('.html', '');
-  let translationKey = toCamelCase(filenameNoExt);
-  if (KEY_MAPPING[filenameNoExt]) {
-    translationKey = KEY_MAPPING[filenameNoExt];
-  }
 
   const { tools } = translations[lang];
   const dom = new JSDOM(originalContent);
   const document = dom.window.document;
+
+  // Prefer the locale key the page declares on its own <h1>
+  // (data-i18n="tools:<key>.name") over guessing it from the filename. Twelve
+  // slugs do not match their key — edit-pdf/pdfEditor, txt-to-pdf/textToPdf,
+  // form-filler/pdfFormFiller and friends — and guessing left those pages with
+  // the English title and description in every locale even though their bodies
+  // and their locale entries were translated. No page declares a conflicting
+  // key earlier in the document, so the <h1> is authoritative.
+  const h1 = document.querySelector('h1');
+  const declaredKey =
+    (h1 &&
+      (h1.outerHTML.match(/data-i18n="tools:([A-Za-z0-9_]+)\.name"/) ||
+        [])[1]) ||
+    null;
+  let translationKey = declaredKey || toCamelCase(filenameNoExt);
+  if (KEY_MAPPING[filenameNoExt]) {
+    translationKey = KEY_MAPPING[filenameNoExt];
+  }
 
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';

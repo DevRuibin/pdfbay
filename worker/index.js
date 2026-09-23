@@ -42,6 +42,18 @@ export default {
       });
     }
 
+    // Workers static assets answer /page.html with a 307 to /page. That is
+    // temporary, so Search Console keeps the .html URL indexed next to the
+    // extensionless one the canonical tag and sitemap already declare. A 301
+    // folds the duplicate into the canonical path instead.
+    if (url.pathname.endsWith('.html') && url.pathname !== '/404.html') {
+      const target = new URL(url);
+      target.pathname = url.pathname
+        .replace(/\/index\.html$/, '/')
+        .replace(/\.html$/, '');
+      return Response.redirect(target.toString(), 301);
+    }
+
     return env.ASSETS.fetch(request);
   },
 };
